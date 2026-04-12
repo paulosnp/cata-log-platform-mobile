@@ -45,7 +45,6 @@ class _ChatScreenState extends State<ChatScreen> {
     });
     _inputController.clear();
 
-    // Scroll to bottom
     Future.delayed(const Duration(milliseconds: 100), () {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
@@ -121,7 +120,6 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
-          // ─── Order Info Banner ─────────────────────────
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -170,7 +168,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
 
-          // ─── Messages ──────────────────────────────────
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
@@ -203,7 +200,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
 
-          // ─── Input Bar ─────────────────────────────────
           Container(
             padding: EdgeInsets.only(
               left: 16,
@@ -295,9 +291,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 }
 
-// ──────────────────────────────────────────────────────────────
-// CHAT BUBBLE
-// ──────────────────────────────────────────────────────────────
+
 
 class _ChatBubble extends StatelessWidget {
   final Mensagem mensagem;

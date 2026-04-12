@@ -34,17 +34,15 @@ class _OrcamentoScreenState extends State<OrcamentoScreen> {
 
     setState(() => _isSubmitting = true);
 
-    // Simula envio
     await Future.delayed(const Duration(milliseconds: 800));
 
-    // Atualiza estado da encomenda
     widget.encomenda.status = 'ORCAMENTO_ENVIADO';
     widget.encomenda.precoProposto =
         double.tryParse(_precoController.text.replaceAll(',', '.'));
     widget.encomenda.prazoDias = int.tryParse(_prazoController.text);
 
     if (mounted) {
-      Navigator.of(context).pop(true); // Retorna sucesso
+      Navigator.of(context).pop(true);
     }
   }
 
@@ -66,7 +64,6 @@ class _OrcamentoScreenState extends State<OrcamentoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ─── Client Info ────────────────────────────
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
@@ -130,7 +127,6 @@ class _OrcamentoScreenState extends State<OrcamentoScreen> {
               ),
               const SizedBox(height: 32),
 
-              // ─── Form Title ─────────────────────────────
               Text(
                 'Proposta de Orçamento',
                 style: GoogleFonts.plusJakartaSans(
@@ -150,7 +146,6 @@ class _OrcamentoScreenState extends State<OrcamentoScreen> {
               ),
               const SizedBox(height: 28),
 
-              // ─── Price Field ────────────────────────────
               _buildLabel('Preço Proposto (R\$)'),
               const SizedBox(height: 8),
               TextFormField(
@@ -197,7 +192,6 @@ class _OrcamentoScreenState extends State<OrcamentoScreen> {
               ),
               const SizedBox(height: 24),
 
-              // ─── Prazo Field ────────────────────────────
               _buildLabel('Prazo de Produção (dias)'),
               const SizedBox(height: 8),
               TextFormField(
@@ -233,7 +227,6 @@ class _OrcamentoScreenState extends State<OrcamentoScreen> {
               ),
               const SizedBox(height: 24),
 
-              // ─── Obs Field ──────────────────────────────
               _buildLabel('Observações (opcional)'),
               const SizedBox(height: 8),
               TextFormField(
@@ -251,7 +244,6 @@ class _OrcamentoScreenState extends State<OrcamentoScreen> {
               ),
               const SizedBox(height: 40),
 
-              // ─── Submit Button ──────────────────────────
               SizedBox(
                 width: double.infinity,
                 height: 56,

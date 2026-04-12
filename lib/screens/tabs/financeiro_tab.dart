@@ -10,7 +10,6 @@ class FinanceiroTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        // ─── Header ──────────────────────────────────────
         SliverToBoxAdapter(
           child: Container(
             padding: EdgeInsets.only(
@@ -77,7 +76,6 @@ class FinanceiroTab extends StatelessWidget {
           ),
         ),
 
-        // ─── Revenue Card ────────────────────────────────
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -136,7 +134,6 @@ class FinanceiroTab extends StatelessWidget {
           ),
         ),
 
-        // ─── Transaction List ────────────────────────────
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(24, 32, 24, 12),

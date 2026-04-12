@@ -17,7 +17,6 @@ class _VitrineTabState extends State<VitrineTab> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        // ─── Header ──────────────────────────────────────
         SliverToBoxAdapter(
           child: Container(
             padding: EdgeInsets.only(
@@ -32,7 +31,6 @@ class _VitrineTabState extends State<VitrineTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ─── Logo SVG ─────────────────────────────
                 SvgPicture.asset(
                   'assets/images/logo.svg',
                   height: 40,
@@ -61,7 +59,6 @@ class _VitrineTabState extends State<VitrineTab> {
           ),
         ),
 
-        // ─── Stats bar ────────────────────────────────────
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -89,7 +86,6 @@ class _VitrineTabState extends State<VitrineTab> {
           ),
         ),
 
-        // ─── Product List ────────────────────────────────
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
           sliver: SliverList(
@@ -169,9 +165,7 @@ class _VitrineTabState extends State<VitrineTab> {
   }
 }
 
-// ──────────────────────────────────────────────────────────────
-// STAT CHIP
-// ──────────────────────────────────────────────────────────────
+
 
 class _StatChip extends StatelessWidget {
   final String label;
@@ -221,9 +215,7 @@ class _StatChip extends StatelessWidget {
   }
 }
 
-// ──────────────────────────────────────────────────────────────
-// PRODUTO CARD — com menu contextual (RF-MOB10 & RN17)
-// ──────────────────────────────────────────────────────────────
+
 
 class _ProdutoCard extends StatelessWidget {
   final Produto produto;
@@ -235,7 +227,6 @@ class _ProdutoCard extends StatelessWidget {
   });
 
   void _showContextMenu(BuildContext context) {
-    // RN17: 'Marcar como Vendida' só aparece se pecaUnica == true && vendido == false
     final bool showVenderOption = produto.pecaUnica && !produto.vendido;
 
     showModalBottomSheet(
@@ -259,7 +250,6 @@ class _ProdutoCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Handle bar
               Container(
                 margin: const EdgeInsets.only(top: 12),
                 width: 40,
@@ -270,12 +260,10 @@ class _ProdutoCard extends StatelessWidget {
                 ),
               ),
 
-              // Título do produto
               Padding(
                 padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
                 child: Row(
                   children: [
-                    // Mini thumbnail
                     ClipRRect(
                       borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                       child: SizedBox(
@@ -326,7 +314,6 @@ class _ProdutoCard extends StatelessWidget {
                 ),
               ),
 
-              // Divisor
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Container(
@@ -337,7 +324,6 @@ class _ProdutoCard extends StatelessWidget {
 
               const SizedBox(height: 4),
 
-              // ─── Opção: Editar Obra ─────────────────────
               _BottomSheetOption(
                 icon: Icons.edit_outlined,
                 label: 'Editar Obra',
@@ -347,7 +333,6 @@ class _ProdutoCard extends StatelessWidget {
                 },
               ),
 
-              // ─── Opção: Marcar como Vendida (condicional RN17) ──
               if (showVenderOption)
                 _BottomSheetOption(
                   icon: Icons.check_circle_outline,
@@ -384,7 +369,6 @@ class _ProdutoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image
           ClipRRect(
             borderRadius: const BorderRadius.vertical(
               top: Radius.circular(AppTheme.radiusMd),
@@ -408,7 +392,6 @@ class _ProdutoCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Overlay gradient
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -427,7 +410,6 @@ class _ProdutoCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Badges
                   if (produto.pecaUnica)
                     Positioned(
                       top: 12,
@@ -460,13 +442,11 @@ class _ProdutoCard extends StatelessWidget {
             ),
           ),
 
-          // Content
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 14, 8, 12),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                // Texto (título + preço)
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -491,7 +471,6 @@ class _ProdutoCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // ─── Botão de 3 pontos (RF-MOB10) ──────────
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
@@ -516,9 +495,7 @@ class _ProdutoCard extends StatelessWidget {
   }
 }
 
-// ──────────────────────────────────────────────────────────────
-// BOTTOM SHEET OPTION
-// ──────────────────────────────────────────────────────────────
+
 
 class _BottomSheetOption extends StatelessWidget {
   final IconData icon;

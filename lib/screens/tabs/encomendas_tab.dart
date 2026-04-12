@@ -18,7 +18,6 @@ class _EncomendasTabState extends State<EncomendasTab> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        // ─── Header ──────────────────────────────────────
         SliverToBoxAdapter(
           child: Container(
             padding: EdgeInsets.only(
@@ -75,7 +74,6 @@ class _EncomendasTabState extends State<EncomendasTab> {
           ),
         ),
 
-        // ─── Encomendas List ──────────────────────────────
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
           sliver: SliverList(
@@ -97,15 +95,13 @@ class _EncomendasTabState extends State<EncomendasTab> {
 
   void _handleEncomendaTap(Encomenda encomenda) async {
     if (encomenda.status == 'AGUARDANDO_ARTESAO') {
-      // Abre a tela de orçamento e espera o resultado
       final result = await Navigator.of(context).push<bool>(
         MaterialPageRoute(
           builder: (_) => OrcamentoScreen(encomenda: encomenda),
         ),
       );
-      // Se o orçamento foi enviado, atualiza a UI e abre o chat
       if (result == true && mounted) {
-        setState(() {}); // refresh status
+        setState(() {});
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => ChatScreen(encomenda: encomenda),
@@ -113,7 +109,6 @@ class _EncomendasTabState extends State<EncomendasTab> {
         );
       }
     } else {
-      // Já tem orçamento, abre o chat direto
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => ChatScreen(encomenda: encomenda),
@@ -123,9 +118,7 @@ class _EncomendasTabState extends State<EncomendasTab> {
   }
 }
 
-// ──────────────────────────────────────────────────────────────
-// ENCOMENDA CARD
-// ──────────────────────────────────────────────────────────────
+
 
 class _EncomendaCard extends StatelessWidget {
   final Encomenda encomenda;
@@ -159,10 +152,8 @@ class _EncomendaCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top row: client + status
             Row(
               children: [
-                // Avatar
                 Container(
                   width: 42,
                   height: 42,
@@ -214,7 +205,6 @@ class _EncomendaCard extends StatelessWidget {
             ),
             const SizedBox(height: 14),
 
-            // Peça referência
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),
@@ -244,7 +234,6 @@ class _EncomendaCard extends StatelessWidget {
               ),
             ),
 
-            // If orçamento enviado, show price and prazo
             if (!isAguardando && encomenda.precoProposto != null) ...[
               const SizedBox(height: 14),
               Row(
@@ -265,7 +254,6 @@ class _EncomendaCard extends StatelessWidget {
             ],
 
             const SizedBox(height: 14),
-            // Action hint
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

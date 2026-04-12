@@ -1,4 +1,3 @@
-// Mock data para o protótipo funcional — Cata Log Mobile
 
 class Produto {
   final String id;
@@ -50,9 +49,6 @@ class Mensagem {
   });
 }
 
-// ──────────────────────────────────────────────────────────────
-// MOCK LISTS
-// ──────────────────────────────────────────────────────────────
 
 final List<Produto> mockProdutos = [
   Produto(

@@ -21,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Status bar branca para combinar com fundo laranja
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -50,7 +49,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animController.forward();
 
-    // Simula verificação de sessão (RN16) — aguarda 2s e navega
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
       _navigateToLogin();
@@ -58,7 +56,6 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _navigateToLogin() {
-    // Restaura status bar escura antes de navegar
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -101,8 +98,8 @@ class _SplashScreenState extends State<SplashScreen>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.primary,         // #B12300
-              AppColors.primaryContainer, // #FF7859
+              AppColors.primary,
+              AppColors.primaryContainer,
             ],
           ),
         ),
@@ -114,7 +111,6 @@ class _SplashScreenState extends State<SplashScreen>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Logo SVG — usa ColorFilter para renderizar em branco
                   SvgPicture.asset(
                     'assets/images/logo.svg',
                     height: 100,
@@ -124,7 +120,6 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                   ),
                   const SizedBox(height: 32),
-                  // Indicador de loading sutil
                   SizedBox(
                     width: 28,
                     height: 28,

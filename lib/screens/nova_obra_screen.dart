@@ -86,7 +86,6 @@ class _NovaObraScreenState extends State<NovaObraScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ─── Image Placeholder ──────────────────────
               GestureDetector(
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -147,7 +146,6 @@ class _NovaObraScreenState extends State<NovaObraScreen> {
               ),
               const SizedBox(height: 28),
 
-              // ─── Title ──────────────────────────────────
               _buildLabel('Nome da Obra'),
               const SizedBox(height: 8),
               TextFormField(
@@ -174,7 +172,6 @@ class _NovaObraScreenState extends State<NovaObraScreen> {
               ),
               const SizedBox(height: 24),
 
-              // ─── Category ───────────────────────────────
               _buildLabel('Categoria'),
               const SizedBox(height: 8),
               Wrap(
@@ -213,7 +210,6 @@ class _NovaObraScreenState extends State<NovaObraScreen> {
               ),
               const SizedBox(height: 24),
 
-              // ─── Price ──────────────────────────────────
               _buildLabel('Preço (R\$)'),
               const SizedBox(height: 8),
               TextFormField(
@@ -258,7 +254,6 @@ class _NovaObraScreenState extends State<NovaObraScreen> {
               ),
               const SizedBox(height: 24),
 
-              // ─── Description ────────────────────────────
               _buildLabel('Descrição (opcional)'),
               const SizedBox(height: 8),
               TextFormField(
@@ -276,7 +271,6 @@ class _NovaObraScreenState extends State<NovaObraScreen> {
               ),
               const SizedBox(height: 24),
 
-              // ─── Peça Única Toggle ──────────────────────
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -340,7 +334,6 @@ class _NovaObraScreenState extends State<NovaObraScreen> {
               ),
               const SizedBox(height: 36),
 
-              // ─── Submit ─────────────────────────────────
               SizedBox(
                 width: double.infinity,
                 height: 56,

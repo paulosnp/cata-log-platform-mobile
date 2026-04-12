@@ -18,7 +18,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Usamos GlobalKeys para poder chamar setState nas tabs quando necessário
   final _vitrineKey = GlobalKey<State>();
 
   List<Widget> get _tabs => [
@@ -49,7 +48,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
 
     if (result == true && mounted) {
-      // Volta para a aba Vitrine e força rebuild
       setState(() {
         _currentIndex = 0;
       });
@@ -80,7 +78,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      // ─── EndDrawer: Menu Lateral (RF-MOB08) ──────────────
       endDrawer: _buildEndDrawer(),
       body: Stack(
         children: [
@@ -88,7 +85,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             duration: const Duration(milliseconds: 300),
             child: _tabs[_currentIndex],
           ),
-          // ─── Avatar Button (canto superior direito) ────────
           Positioned(
             top: MediaQuery.of(context).padding.top + 16,
             right: 24,
@@ -121,7 +117,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-      // ─── FAB: Botão + acima do BottomNav ─────────────
       floatingActionButton: Container(
         width: 56,
         height: 56,
@@ -191,20 +186,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ──────────────────────────────────────────────────────────────
-  // END DRAWER — Estilo moderno/Spotify
-  // ──────────────────────────────────────────────────────────────
+
   Widget _buildEndDrawer() {
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.78,
-      backgroundColor: AppColors.inverseSurface, // Fundo escuro premium
+      backgroundColor: AppColors.inverseSurface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.horizontal(left: Radius.circular(20)),
       ),
       child: SafeArea(
         child: Column(
           children: [
-            // ─── Cabeçalho com foto e nome ──────────────────
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 32, 24, 8),
               child: Column(
@@ -249,7 +241,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
             const SizedBox(height: 16),
 
-            // Divisor sutil
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
@@ -260,7 +251,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
             const SizedBox(height: 8),
 
-            // ─── Menu Items ─────────────────────────────────
             _DrawerMenuItem(
               icon: Icons.storefront_outlined,
               label: 'Editar Perfil do Ateliê',
@@ -290,7 +280,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
             const Spacer(),
 
-            // Divisor antes do Sair
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
@@ -299,7 +288,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
 
-            // ─── Botão Sair ─────────────────────────────────
             _DrawerMenuItem(
               icon: Icons.logout_rounded,
               label: 'Sair',
@@ -312,7 +300,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
             const SizedBox(height: 16),
 
-            // Versão do app
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Text(
@@ -339,9 +326,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
-// ──────────────────────────────────────────────────────────────
-// DRAWER MENU ITEM — Estilo moderno
-// ──────────────────────────────────────────────────────────────
+
 class _DrawerMenuItem extends StatelessWidget {
   final IconData icon;
   final String label;

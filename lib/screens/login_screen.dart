@@ -93,11 +93,9 @@ class _LoginScreenState extends State<LoginScreen>
                     children: [
                       const SizedBox(height: 32),
 
-                      // ─── Logo / Brand ─────────────────────────────
                       _buildLogo(),
                       const SizedBox(height: 40),
 
-                      // ─── Welcome Text ─────────────────────────────
                       Text(
                         'Bem-vindo, artesão',
                         style: GoogleFonts.plusJakartaSans(
@@ -120,7 +118,6 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                       const SizedBox(height: 40),
 
-                      // ─── Input Fields ─────────────────────────────
                       _buildInputField(
                         controller: _emailController,
                         label: 'E-mail',
@@ -138,7 +135,6 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                       const SizedBox(height: 12),
 
-                      // ─── Forgot Password ──────────────────────────
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
@@ -160,11 +156,9 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                       const SizedBox(height: 32),
 
-                      // ─── Login Button ─────────────────────────────
                       _buildPrimaryButton(),
                       const SizedBox(height: 24),
 
-                      // ─── Or divider ───────────────────────────────
                       Row(
                         children: [
                           Expanded(
@@ -193,11 +187,9 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                       const SizedBox(height: 24),
 
-                      // ─── Google Button ────────────────────────────
                       _buildGoogleButton(),
                       const SizedBox(height: 32),
 
-                      // ─── Sign up link ─────────────────────────────
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -223,7 +215,6 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                       const SizedBox(height: 40),
 
-                      // ─── Footer links ─────────────────────────────
                       Wrap(
                         spacing: 20,
                         children: [
