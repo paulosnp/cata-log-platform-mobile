@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import 'tabs/vitrine_tab.dart';
 import 'tabs/encomendas_tab.dart';
 import 'tabs/financeiro_tab.dart';
 import 'nova_obra_screen.dart';
+import 'login_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -14,15 +16,16 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Usamos GlobalKeys para poder chamar setState nas tabs quando necessário
   final _vitrineKey = GlobalKey<State>();
 
   List<Widget> get _tabs => [
-    VitrineTab(key: _vitrineKey),
-    const EncomendasTab(),
-    const FinanceiroTab(),
-  ];
+        VitrineTab(key: _vitrineKey),
+        const EncomendasTab(),
+        const FinanceiroTab(),
+      ];
 
   void _abrirNovaObra() async {
     final result = await Navigator.of(context).push<bool>(
@@ -53,12 +56,70 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
+  void _handleLogout() {
+    Navigator.of(context).pushAndRemoveUntil(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const LoginScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeInOut,
+            ),
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 400),
+      ),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: _tabs[_currentIndex],
+      key: _scaffoldKey,
+      // ─── EndDrawer: Menu Lateral (RF-MOB08) ──────────────
+      endDrawer: _buildEndDrawer(),
+      body: Stack(
+        children: [
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: _tabs[_currentIndex],
+          ),
+          // ─── Avatar Button (canto superior direito) ────────
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 16,
+            right: 24,
+            child: GestureDetector(
+              onTap: () => _scaffoldKey.currentState?.openEndDrawer(),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.25),
+                    width: 2.5,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.onSurface.withValues(alpha: 0.08),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const CircleAvatar(
+                  radius: 20,
+                  backgroundColor: AppColors.surfaceContainerHigh,
+                  backgroundImage: NetworkImage(
+                    'https://images.unsplash.com/photo-1556157382-97eda2d62296?w=100',
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       // ─── FAB: Botão + acima do BottomNav ─────────────
       floatingActionButton: Container(
@@ -124,6 +185,231 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // END DRAWER — Estilo moderno/Spotify
+  // ──────────────────────────────────────────────────────────────
+  Widget _buildEndDrawer() {
+    return Drawer(
+      width: MediaQuery.of(context).size.width * 0.78,
+      backgroundColor: AppColors.inverseSurface, // Fundo escuro premium
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.horizontal(left: Radius.circular(20)),
+      ),
+      child: SafeArea(
+        child: Column(
+          children: [
+            // ─── Cabeçalho com foto e nome ──────────────────
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 32, 24, 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.primaryContainer.withValues(alpha: 0.5),
+                        width: 3,
+                      ),
+                    ),
+                    child: const CircleAvatar(
+                      radius: 36,
+                      backgroundColor: AppColors.surfaceContainerHigh,
+                      backgroundImage: NetworkImage(
+                        'https://images.unsplash.com/photo-1556157382-97eda2d62296?w=200',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Ateliê Mãos de Barro',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.inverseOnSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'atelie.maos@email.com',
+                    style: GoogleFonts.manrope(
+                      fontSize: 13,
+                      color: AppColors.inverseOnSurface.withValues(alpha: 0.6),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Divisor sutil
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Container(
+                height: 1,
+                color: AppColors.inverseOnSurface.withValues(alpha: 0.1),
+              ),
+            ),
+
+            const SizedBox(height: 8),
+
+            // ─── Menu Items ─────────────────────────────────
+            _DrawerMenuItem(
+              icon: Icons.storefront_outlined,
+              label: 'Editar Perfil do Ateliê',
+              onTap: () {
+                Navigator.pop(context);
+                _showSnackBarInfo('Editar Perfil do Ateliê');
+              },
+            ),
+            _DrawerMenuItem(
+              icon: Icons.account_balance_wallet_outlined,
+              label: 'Configurar Recebimentos',
+              subtitle: 'Mercado Pago',
+              onTap: () {
+                Navigator.pop(context);
+                _showSnackBarInfo('Configurar Recebimentos (Mercado Pago)');
+              },
+            ),
+            _DrawerMenuItem(
+              icon: Icons.local_shipping_outlined,
+              label: 'Configurar Logística',
+              subtitle: 'Melhor Envio',
+              onTap: () {
+                Navigator.pop(context);
+                _showSnackBarInfo('Configurar Logística (Melhor Envio)');
+              },
+            ),
+
+            const Spacer(),
+
+            // Divisor antes do Sair
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Container(
+                height: 1,
+                color: AppColors.inverseOnSurface.withValues(alpha: 0.1),
+              ),
+            ),
+
+            // ─── Botão Sair ─────────────────────────────────
+            _DrawerMenuItem(
+              icon: Icons.logout_rounded,
+              label: 'Sair',
+              isDestructive: true,
+              onTap: () {
+                Navigator.pop(context);
+                _handleLogout();
+              },
+            ),
+
+            const SizedBox(height: 16),
+
+            // Versão do app
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                'Cata Log v1.0.0',
+                style: GoogleFonts.manrope(
+                  fontSize: 11,
+                  color: AppColors.inverseOnSurface.withValues(alpha: 0.3),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showSnackBarInfo(String feature) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('🔧 $feature — Em breve!'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
+// DRAWER MENU ITEM — Estilo moderno
+// ──────────────────────────────────────────────────────────────
+class _DrawerMenuItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String? subtitle;
+  final VoidCallback onTap;
+  final bool isDestructive;
+
+  const _DrawerMenuItem({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.subtitle,
+    this.isDestructive = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final Color textColor = isDestructive
+        ? AppColors.errorContainer
+        : AppColors.inverseOnSurface;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: AppColors.primaryContainer.withValues(alpha: 0.1),
+        highlightColor: AppColors.primaryContainer.withValues(alpha: 0.05),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                size: 22,
+                color: textColor.withValues(alpha: 0.85),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: GoogleFonts.manrope(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: textColor,
+                      ),
+                    ),
+                    if (subtitle != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle!,
+                        style: GoogleFonts.manrope(
+                          fontSize: 12,
+                          color: textColor.withValues(alpha: 0.5),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.chevron_right_rounded,
+                size: 20,
+                color: textColor.withValues(alpha: 0.3),
+              ),
+            ],
           ),
         ),
       ),
